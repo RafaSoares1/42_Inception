@@ -1,6 +1,9 @@
 # Start the MariaDB service
 service mariadb start
 
+#-uroot: This option specifies the MariaDB user to connect as, in this case, the user is "root." The -u option is followed by the username.
+#-e: This option allows you to execute a statement or query directly from the command line. In this case, it is followed by the SQL statement within double quotes 
+
 # Create a database if it does not already exist
 mariadb -uroot -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 
@@ -13,7 +16,7 @@ mariadb -uroot -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER
 # Change the password for the 'root' user on the local machine
 mariadb -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;"
 
-# Shut down MariaDB, waiting for all slaves to catch up
+# Shut down MariaDB, waiting for all slaves to catch up. a "slave" typically refers to a server or instance that replicates data from a "master" server.
 mariadb-admin -uroot -p$SQL_ROOT_PASSWORD --wait-for-all-slaves shutdown
 
 # Start the MariaDB server in a safe mode
