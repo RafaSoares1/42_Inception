@@ -1,3 +1,5 @@
+tail -f /dev/null
+
 # Start the MariaDB service
 service mariadb start
 
