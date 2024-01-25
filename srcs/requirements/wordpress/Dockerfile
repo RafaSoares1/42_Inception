@@ -4,19 +4,19 @@ FROM debian:bullseye
 EXPOSE 9000
 
 # Set TEMP environment variables for php configuration
-ENV SQL_DATABASE="DataBaseMDB"
-ENV SQL_USER="inception"
-ENV SQL_ROOT_PASSWORD="12345"
-ENV SQL_PASSWORD="123456"
-ENV SQL_HOST="mariadb"
-ENV WP_DOMAIN_NAME="emsoares.42.fr"
-ENV WP_TITLE="inception"
-ENV WP_ADMIN_USER="root"
-ENV WP_ADMIN_PASSWORD="12345"
-ENV WP_ADMIN_EMAIL="root@123.com"
-ENV WP_USER="user"
-ENV WP_USER_EMAIL="user@123.com"
-ENV WP_USER_PASSWORD="12345"
+#ENV SQL_DATABASE="DataBaseMDB"
+#ENV SQL_USER="inception"
+#ENV SQL_ROOT_PASSWORD="12345"
+#ENV SQL_PASSWORD="123456"
+#ENV SQL_HOST="mariadb"
+#ENV WP_DOMAIN_NAME="emsoares.42.fr"
+#ENV WP_TITLE="inception"
+#ENV WP_ADMIN_USER="root"
+#ENV WP_ADMIN_PASSWORD="12345"
+#ENV WP_ADMIN_EMAIL="root@123.com"
+#ENV WP_USER="user"
+#ENV WP_USER_EMAIL="user@123.com"
+#ENV WP_USER_PASSWORD="12345"
 
 
 RUN apt update
@@ -28,10 +28,10 @@ RUN apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Create a directory for WordPress
-RUN mkdir -p /var/www/
+RUN mkdir -p /var/www/html
 
 # Download and extract WordPress
-WORKDIR /var/www/
+WORKDIR /var/www/html
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget && \
     wget --no-check-certificate https://wordpress.org/wordpress-6.4.tar.gz && \

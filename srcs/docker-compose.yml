@@ -13,13 +13,20 @@ services:
       - inception
     volumes:
       - mariadb_vol:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h localhost -uroot -p${SQL_ROOT_PASSWORD}
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
     restart: always
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     expose :
       - 9000
     env_file:
@@ -34,13 +41,13 @@ networks:
       driver: bridge
 
 volumes:
-  mariadb_data:
+  mariadb_vol:
     driver: local
     driver_opts:
       type: none
       device: /home/${USERNAME}/data/mariadb_vol
       o: bind
-  wordpress_data:
+  wordpress_vol:
     driver: local
     driver_opts:
       type: none

@@ -1,22 +1,21 @@
-tail -f /dev/null
-
 # Start the MariaDB service
-service mariadb start
+service mariadb start -p$SQL_ROOT_PASSWORD
 
+sleep 5
 #-uroot: This option specifies the MariaDB user to connect as, in this case, the user is "root." The -u option is followed by the username.
 #-e: This option allows you to execute a statement or query directly from the command line. In this case, it is followed by the SQL statement within double quotes 
 
 # Create a database if it does not already exist
-mariadb -uroot -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
+mariadb -uroot -p$SQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 
 # Create a user if it does not already exist, identified by the specified password
-mariadb -uroot -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
+mariadb -uroot -p$SQL_ROOT_PASSWORD -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
 
 # Grant all privileges on the specified database to the specified user, allowing access from any host
-mariadb -uroot -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+mariadb -uroot -p$SQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
 
 # Change the password for the 'root' user on the local machine
-mariadb -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;"
+mariadb -uroot -p$SQL_ROOT_PASSWORD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;"
 
 # Shut down MariaDB, waiting for all slaves to catch up. a "slave" typically refers to a server or instance that replicates data from a "master" server.
 mariadb-admin -uroot -p$SQL_ROOT_PASSWORD --wait-for-all-slaves shutdown
