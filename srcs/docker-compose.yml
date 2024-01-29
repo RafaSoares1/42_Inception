@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:inception
     container_name: mariadb
     build: ./requirements/mariadb/
     expose:
@@ -16,7 +16,7 @@ services:
     restart: on-failure
 
   wordpress:
-    image: wordpress
+    image: wordpress:inception
     container_name: wordpress
     build: ./requirements/wordpress/
     expose:
@@ -32,7 +32,7 @@ services:
       - mariadb
 
   nginx:
-    image: nginx
+    image: nginx:inception
     container_name: nginx
     build:
       context: ./requirements/nginx/

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Start the MariaDB service
 service mariadb start 
 
 mariadb -v -u root << EOF
@@ -12,6 +11,8 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$SQL_ROOT_PASSWORD');
 EOF
 
 service mariadb stop
+
+sleep 5
 
 exec $@
 
