@@ -5,6 +5,7 @@ COMPOSE = ./srcs/docker-compose.yml
 all: conf up
 
 conf: #dont forget the env
+	@cp ./.env ./srcs/
 	@echo "Creating volumes...\n"
 	@mkdir -p /home/rafaelsoares/data/mariadb_vol /home/rafaelsoares/data/wordpress_vol
 	@sudo sed -i '/^127.0.0.1/ {/emsoares.42.fr/! s/localhost/localhost emsoares.42.fr/}' /etc/hosts
