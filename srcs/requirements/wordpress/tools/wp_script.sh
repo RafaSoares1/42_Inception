@@ -1,4 +1,6 @@
-sleep 5
+#tail -f /dev/null
+
+sleep 10
 
 # Install WordPress
 wp core install --url="$WP_URL" \
@@ -16,6 +18,7 @@ wp user create "$WP_USER" "$WP_EMAIL" \
     --role="$WP_ROLE" \
     --path='/var/www/wordpress' \
     --allow-root
+
 
 
 /usr/sbin/php-fpm7.4 -F

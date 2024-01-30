@@ -37,4 +37,4 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 COPY ./tools/wp_script.sh /bin/
 RUN	chmod +x /bin/wp_script.sh
 
-ENTRYPOINT	["sh", "/bin/wp_script.sh"]
+CMD	["sh", "/bin/wp_script.sh"]
